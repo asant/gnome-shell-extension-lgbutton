@@ -1,0 +1,9 @@
+{
+    "shell-version": [@compatible_shell_versions@], 
+    "uuid": "@uuid@", 
+    "name": "LookingGlass Button", 
+    "url": "@extension_url@", 
+    "description": "A very simple extension that lets you toggle the LookingGlass visibility by clicking on a panel icon. Hopefully useful to lazy scripters like me ;-)",
+    "version": @extension_version@
+}
+
