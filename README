@@ -1,0 +1,9 @@
+This is the lgbutton extension, a very simple GNOME Shell extension that lets
+you toggle the LookingGlass visibility by pressing a button on the Shell's
+panel.
+
+In case you didn't get your copy of this extension from github, you can find its
+original repository at the following url:
+
+https://github.com/asant/gnome-shell-extension-lgbutton
+
