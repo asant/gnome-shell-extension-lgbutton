@@ -118,7 +118,6 @@ function init_localizations(metadata) {
         if (dir.query_file_type(Gio.FileQueryInfoFlags.NONE, null) ==
                 Gio.FileType.DIRECTORY) {
             imports.gettext.bindtextdomain(domain, locale_dirs[i]);
-            imports.gettext.textdomain(domain);
             return;
         }
     }
