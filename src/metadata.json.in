@@ -5,6 +5,7 @@
     "url": "@extension_url@", 
     "description": "A very simple extension that lets you toggle the LookingGlass visibility by clicking on a panel icon. Hopefully useful to lazy scripters like me ;-)",
     "version": @extension_version@,
-    "system-locale-dir": "@system_locale_dir@"
+    "system-locale-dir": "@system_locale_dir@",
+    "gettext-domain": "@gettext_domain@"
 }
 
