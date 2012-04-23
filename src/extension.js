@@ -2,7 +2,7 @@
 /*
  * A very simple GNOME Shell extension that lets users toggle the
  * LookingGlass window by pressing a top panel button.
- * Copyright (C) 2012  Andrea Santilli <andresantilli gmx com>
+ * Copyright (C) 2012  Andrea Santilli <andreasantilli gmx com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
