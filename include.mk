@@ -1,5 +1,5 @@
 extension_url = https://github.com/asant/gnome-shell-extension-lgbutton
-extension_version = 9
+extension_version = 10
 extension_name = lgbutton
 extension_base = @atomant
 uuid = $(extension_name)$(extension_base)
