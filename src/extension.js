@@ -3,6 +3,7 @@
  * A very simple GNOME Shell extension that lets users toggle the
  * LookingGlass window by pressing a top panel button.
  * Copyright (C) 2012  Andrea Santilli <andreasantilli gmx com>
+ * Copyright (C) 2018  Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,42 +23,33 @@
 
 const Gio       = imports.gi.Gio;
 const GLib      = imports.gi.GLib;
-const Lang      = imports.lang;
 const Main      = imports.ui.main;
-const Panel     = imports.ui.panel;
 const PanelMenu = imports.ui.panelMenu;
 const St        = imports.gi.St;
 
 const LOCALE_SUBDIR     = 'locale';
 const LOCALE_EXT        = '.mo';
 const MSG_SUBDIR        = 'LC_MESSAGES';
-const TOOLTIP           = "Toggle LookingGlass";
+const TOOLTIP           = 'Toggle LookingGlass';
 const ICON_NAME         = 'preferences-desktop-display';
-const ICON_TYPE         = St.IconType.SYMBOLIC;
 const ROLE              = 'lgbutton';
-const NEW_API_VERSION   = [ 3, 3, 0 ];
+const NEW_API_VERSION   = [ 3, 28, 0 ];
 
-function LookingGlassButton() {
-    this._init.apply(this, arguments);
-}
 
-/* we want our button to show the same layout of a PanelMenu.Button; we
- * inherit from PanelMenu.ButtonBox though, as we don't need any menus. */
-LookingGlassButton.prototype = {
-    __proto__: PanelMenu.ButtonBox.prototype,
+class LookingGlassButton extends PanelMenu.Button{
 
-    _init: function(metadata, params)
-    {
+    constructor(){
+        super(St.Align.START);
         /* set the same properties of a PanelMenu.Button */
-        PanelMenu.ButtonBox.prototype._init.call(this, {
-            reactive:       true,
-            can_focus:      true,
-            track_hover:    true
-        });
 
+        let box = new St.BoxLayout();
+        this.icon = new St.Icon({icon_name: ICON_NAME,
+                                 style_class: 'system-status-icon'});
+        box.add(this.icon);
+
+        this.actor.add_child(box);
         this.actor.add_actor(new St.Icon({
             icon_name:      ICON_NAME,
-            icon_type:      ICON_TYPE,
             style_class:    'system-status-icon'
         }));
 
@@ -67,22 +59,15 @@ LookingGlassButton.prototype = {
         this.actor.has_tooltip = true;
         this.actor.tooltip_text = _(TOOLTIP);
 
-        this.actor.connect('button-press-event', Lang.bind(this, function () {
+        this.actor.connect('button-press-event', () => {
             /* this call won't create a new instance
              * of LG when there's already one.*/
             Main.createLookingGlass();
             Main.lookingGlass.toggle();
-        }));
-        /* we can't directly call Main.panel.addToStatusArea() as
-         * this object is not an instance of PanelMenu.Button */
-        Main.panel._insertStatusItem(this.actor, 0);
-        Main.panel._statusArea[ROLE] = this;
-    },
+        });
+    }
 
-    destroy: function() {
-        /* remove this button from the status area first */
-        Main.panel._statusArea[ROLE] = null;
-
+    destroy() {
         this.actor._delegate = null;
         this.actor.destroy();
         this.actor.emit('destroy');
@@ -142,6 +127,7 @@ function init(metadata) {
 
 function enable() {
     lgb = new LookingGlassButton();
+    Main.panel.addToStatusArea('LookingGlassButton', lgb, 0, 'right');
 }
 
 function disable() {
